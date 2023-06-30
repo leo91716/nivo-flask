@@ -28,7 +28,7 @@ def country():
             'id':country,
             'data':list(map(lambda x: {'y':x['Life expectancy '],'x':x['Year']},new_dict))})
     print('Nan' in simplejson.dumps(countryCollector, ignore_nan=True))
-    return simplejson.dumps(countryCollector[-5:], ignore_nan=True)
+    return simplejson.dumps({'data':countryCollector[-5:],'x':'Year','y':'Life expectancy '}, ignore_nan=True)
 
 
 @app.route("/countryBar", methods = ['POST', 'GET'])
@@ -37,6 +37,6 @@ def countryBar():
     countryCollector=[]
     countries=df[df['Year']==2014]
     countries=countries[['infant deaths','Life expectancy ', 'Country']].to_dict('records')
-    countries=simplejson.dumps({'data':countries[-2:], 'keys':['infant deaths','Life expectancy '], 'indexBy':'Country'}, ignore_nan=True)
+    countries=simplejson.dumps({'data':countries[-2:], 'keys':['infant deaths','Life expectancy '], 'x':'Country','y':'Year'}, ignore_nan=True)
     print(countries)
     return countries
